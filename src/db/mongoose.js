@@ -37,6 +37,3 @@ mongoose.connect(connectionURL, {
 // 	});
 
 
-
-git remote add origin git@github.com:chandanjainn/taskList-App.git
-git push -u origin master
