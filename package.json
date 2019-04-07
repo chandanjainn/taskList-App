@@ -1,0 +1,22 @@
+{
+  "name": "tasklist-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mongoDB.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongodb": "^3.2.2",
+    "mongoose": "^5.4.22",
+    "validator": "^10.11.0"
+  },
+  "scripts": {
+    "start": "node src/index",
+    "dev": "nodemon src/index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
