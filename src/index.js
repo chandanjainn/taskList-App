@@ -1,7 +1,8 @@
 const express = require('express');
+
 require('./db/mongoose');
 const User = require('./models/user');
-const Task = require('./models/tasks');
+const Task = require('./models/tasks').default;
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -10,7 +11,6 @@ app.use(express.json());
 
 app.post('/users', (req, res) => {
 	const user = new User(req.body);
-
 	user
 		.save()
 		.then(user => {
@@ -69,7 +69,6 @@ app.get('/tasks/:id', (req, res) => {
 
 app.post('/tasks', (req, res) => {
 	const task = new Task(req.body);
-
 	task
 		.save()
 		.then(task => {
