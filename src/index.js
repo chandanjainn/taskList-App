@@ -11,5 +11,5 @@ app.use(userRouter);
 app.use(taskRouter);
 
 app.listen(PORT, () => {
-	console.log('Node Server is up on port', PORT);
+	console.log('Node Server is *.* on port', PORT);
 });

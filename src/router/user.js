@@ -53,19 +53,19 @@ userRouter.get('/users/me', auth, async (req, res) => {
 	res.send(req.user);
 });
 
-userRouter.get('/users/:id', async (req, res) => {
-	try {
-		const user = await User.findById(req.params.id);
-		if (!user) {
-			return res.status(400).send();
-		}
-		res.send(user);
-	} catch (err) {
-		res.status(500).send();
-	}
-});
+// userRouter.get('/users/:id', async (req, res) => {
+// 	try {
+// 		const user = await User.findById(req.params.id);
+// 		if (!user) {
+// 			return res.status(400).send();
+// 		}
+// 		res.send(user);
+// 	} catch (err) {
+// 		res.status(500).send();
+// 	}
+// });
 
-userRouter.patch('/users/:id', async (req, res) => {
+userRouter.patch('/users/me', auth, async (req, res) => {
 	const updates = Object.keys(req.body);
 	const allowedUpdates = ['name', 'age', 'email', 'password'];
 	const isValidOperation = updates.every(update =>
@@ -76,28 +76,29 @@ userRouter.patch('/users/:id', async (req, res) => {
 	}
 
 	try {
-		const user = await User.findById(req.params.id);
+		//const user = await User.findById(req.params.id);
 		updates.forEach(update => {
-			user[update] = req.body[update];
+			req.user[update] = req.body[update];
 		});
-		await user.save();
+		await req.user.save();
 		// const user = await User.findByIdAndUpdate(req.params.id, req.body, {	new: true,	runValidators: true});
-		if (!user) {
-			return res.status(400).send();
-		}
-		res.send(user);
+		// if (!user) {
+		// 	return res.status(400).send();
+		// }
+		res.send(req.user);
 	} catch (err) {
 		res.status(400).send();
 	}
 });
 
-userRouter.delete('/users/:id', async (req, res) => {
+userRouter.delete('/users/:id', auth, async (req, res) => {
 	try {
-		const user = await User.findByIdAndDelete(req.params.id);
-		if (!user) {
-			return res.status(400).send();
-		}
-		res.send(user);
+		// 	const user = await User.findByIdAndDelete(req.params.id);
+		// 	if (!user) {
+		// 		return res.status(400).send();
+		// 	}
+		await req.user.remove();
+		res.send(req.user);
 	} catch (err) {
 		res.status(500).send();
 	}
