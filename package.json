@@ -4,11 +4,15 @@
   "description": "",
   "main": "mongoDB.js",
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.2.2",
     "mongoose": "^5.4.22",
+    "multer": "^1.4.1",
+    "sharp": "^0.22.0",
     "validator": "^10.11.0"
   },
   "scripts": {
