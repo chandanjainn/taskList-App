@@ -70,18 +70,6 @@ userRouter.get('/users/me', auth, async (req, res) => {
 	res.send(req.user);
 });
 
-// userRouter.get('/users/:id', async (req, res) => {
-// 	try {
-// 		const user = await User.findById(req.params.id);
-// 		if (!user) {
-// 			return res.status(400).send();
-// 		}
-// 		res.send(user);
-// 	} catch (err) {
-// 		res.status(500).send();
-// 	}
-// });
-
 userRouter.patch('/users/me', auth, async (req, res) => {
 	const updates = Object.keys(req.body);
 	const allowedUpdates = ['name', 'age', 'email', 'password'];
@@ -108,16 +96,13 @@ userRouter.patch('/users/me', auth, async (req, res) => {
 	}
 });
 
-userRouter.delete('/users/:id', auth, async (req, res) => {
+userRouter.delete('/users/me', auth, async (req, res) => {
 	try {
-		// 	const user = await User.findByIdAndDelete(req.params.id);
-		// 	if (!user) {
-		// 		return res.status(400).send();
-		// 	}
+		cancellationMail(req.user.email, req.user.name);
 		await req.user.remove();
 		res.send(req.user);
 	} catch (err) {
-		res.status(500).send();
+		res.status(500).send(err.message);
 	}
 });
 
@@ -141,22 +126,21 @@ userRouter.post(
 
 userRouter.delete('/users/me/avatar', auth, async (req, res) => {
 	req.user.avatar = undefined;
-	cancellationMail(user.email, user.name);
 	await req.user.save();
 	res.send();
 });
 
-// userRouter.get('/users/me/avatar', auth, async (req, res) => {
-// 	try {
-// 		if (!req.user.avatar) {
-// 			throw new Error('No Image found');
-// 		}
-// 		res.set('Content-Type', 'image/jpg');
-// 		res.send(req.user.avatar);
-// 	} catch (error) {
-// 		res.status(400).send(error);
-// 	}
-// });
+userRouter.get('/users/me/avatar', auth, async (req, res) => {
+	try {
+		if (!req.user.avatar) {
+			throw new Error('No Image found');
+		}
+		res.set('Content-Type', 'image/jpg');
+		res.send(req.user.avatar);
+	} catch (error) {
+		res.status(400).send(error);
+	}
+});
 
 userRouter.get('/users/:id/avatar', async (req, res) => {
 	try {
