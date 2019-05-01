@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-mongoose.connect(process.env.MONGODB_URL, {
+const mongoURL = encodeURI(process.env.MONGODB_URL);
+
+mongoose.connect(mongoURL, {
 	uri_decode_auth: true,
 	useNewUrlParser: true,
 	useCreateIndex: true,
